@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 10:50:06 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/20 15:33:31 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 10:59:11 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,16 @@ int			print_hexa_up(t_flags flags, unsigned long long nb);
 int			print_int(t_flags flags, long long nb);
 int			print_pointer(t_flags flags, void *adress);
 int			print_str(t_flags flags, char *str);
-int			print_float(t_flags flags, double nb);
+int			print_float(t_flags flags, double nb, int cap);
 int			print_e(t_flags flags, double nb, char cap);
-int			print_unsigned_int(t_flags flags, unsigned int nb);
+int			print_unsigned_int(t_flags flags, unsigned long long nb);
+int			print_octal(t_flags flags, unsigned long long nb);
 void		ft_putlzero(int len);
 void		ft_putlspace(int len);
 int			ft_strlen_substr(const char **str, char c);
 void		ft_putlstr_fd(char *str, int len, int fd);
 size_t		ft_strlen(const char *s);
+int			nbr_spacecounter_figure_base_u(unsigned long long nb, int base);
 int			nbr_spacecounter_figure_base(long long nb, int base);
 char		*ft_strchr(const char *s, int c);
 int			get_print_char_hexa(t_flags flags, int nb, int len);
@@ -70,6 +72,7 @@ int			get_print_int(t_flags flags, va_list ap);
 int			get_print_unsigned(t_flags flags, va_list ap);
 int			get_print_hexa_low(t_flags flags, va_list ap);
 int			get_print_hexa_up(t_flags flags, va_list ap);
+int			get_print_octal(t_flags flags, va_list ap);
 void		fill_n(t_flags flags, long long int *n);
 void		fill_n_int(va_list ap, int count);
 void		fill_n_long(va_list ap, int count);

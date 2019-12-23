@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/19 10:44:26 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/20 17:04:11 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 17:13:32 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_floatinfo_e(t_flags flags, t_float *floatinfo, double nb)
 	else
 		floatinfo->nb_before_length =
 			nbr_spacecounter_figure_base(floatinfo->nb_before, 10);
-	floatinfo->nb_after_length = flags.prenumber - floatinfo->nb_before_length;
+	floatinfo->nb_after_length = flags.prenumber - floatinfo->nb_before_length + 1;
 	if (floatinfo->nb_before == 0)
 	{
 		floatinfo->nb_zero_sign = 1;
@@ -54,7 +54,7 @@ void	get_floatinfo_e(t_flags flags, t_float *floatinfo, double nb)
 		else if (floatinfo->nb_after_length == -1)
 			res = 10;
 		else
-			res = tentothepower(floatinfo->nb_after_length + 1);
+			res = tentothepower(floatinfo->nb_after_length);
 		floatinfo->nb_after = nb * res;
 		while (floatinfo->nb_before > 9 || floatinfo->nb_before < -9)
 		{
@@ -132,15 +132,22 @@ int		print_e(t_flags flags, double nb, char cap)
 	if (flags.width > floatinfo.length && flags.dash == 0)
 	{
 		if (flags.zero == 1)
+		{
+			ft_print_sign(flags, floatinfo.neg);
 			ft_putlzero(flags.width - floatinfo.length);
+		}
 		else
 			ft_putlspace(flags.width - floatinfo.length);
 	}
+	if (flags.zero == 0 || flags.width <= floatinfo.length)
+		ft_print_sign(flags, floatinfo.neg);
 	put_e_before(flags, floatinfo.neg, floatinfo.nb_before);
 	if (flags.prenumber != 0)
 		put_float_after(flags, floatinfo.nb_after);
 	print_e_sign(floatinfo, cap);
 	if (flags.width > floatinfo.length && flags.dash == 1)
 		ft_putlspace(flags.width - floatinfo.length);
+	if (flags.width > floatinfo.length)
+		return (flags.width);
 	return (floatinfo.length);
 }

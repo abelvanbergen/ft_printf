@@ -6,13 +6,14 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 11:08:18 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/18 13:07:52 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 08:49:32 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static void	ft_putnbr_without_sign(long long nb, int len, int apostrophe, int fd)
+static void	ft_putnbr_without_sign(long long nb, int len,
+											int apostrophe, int fd)
 {
 	int		i;
 	int		count;
@@ -46,7 +47,7 @@ static int	get_print_char_int(long long nb, t_flags flags, int neg, int len)
 
 	if (flags.precision == 1 && flags.prenumber == 0 && nb == 0)
 	{
-		if (flags.plus == 1)
+		if (flags.plus == 1 || flags.space == 1)
 			return (-1);
 		return (0);
 	}
@@ -107,7 +108,7 @@ int			print_int(t_flags flags, long long nb)
 	if (print_char != 0 && check != -1)
 		ft_print_precision_and_number(flags, len, print_char, nb);
 	if (check == -1)
-		write(1, "+", 1);
+		ft_print_sign(flags, neg);
 	if (flags.width > print_char && flags.dash == 1)
 		ft_putlspace(flags.width - print_char);
 	if (flags.width > print_char)

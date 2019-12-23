@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/19 15:53:27 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/20 11:14:33 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 15:49:54 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	put_float_after(t_flags flags, long long nb)
 {
 	int		i;
 	int		len;
-	char	buf[20];
+	char	buf[30];
 
 	i = flags.prenumber - 1;
 	len = nbr_spacecounter_figure_base(nb, 10);

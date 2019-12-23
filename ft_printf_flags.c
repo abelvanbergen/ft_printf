@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 14:45:35 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/17 11:45:42 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/22 18:40:41 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ static void	get_flags(t_flags *flags, char **str)
 		if (**str == '\'')
 			flags->apostrophe = 1;
 		if (**str == '+')
+		{
 			flags->plus = 1;
-		if (**str == ' ')
+			flags->space = 0;
+		}
+		if (**str == ' ' && flags->plus == 0)
 			flags->space = 1;
 		if (**str == '#')
 			flags->hash = 1;

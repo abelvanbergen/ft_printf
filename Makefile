@@ -6,7 +6,7 @@
 #    By: avan-ber <avan-ber@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/13 13:52:31 by avan-ber       #+#    #+#                 #
-#    Updated: 2019/12/20 15:32:07 by avan-ber      ########   odam.nl          #
+#    Updated: 2019/12/22 18:31:53 by avan-ber      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ FLAGS = -Wall -Wextra -Werror
 OBJECTS =	ft_printf_fill_n.o \
 			ft_printf_flags.o \
 			ft_printf_get_print_nbr.o \
+			ft_printf_get_print_rest.o \
+			ft_printf_octal.o \
 			ft_printf_print_char.o \
 			ft_printf_print_e.o \
 			ft_printf_print_float.o \
@@ -64,5 +66,9 @@ fclean: clean
 	@ echo "$(RED)========================================\n"
 
 re: fclean all
+
+test: re
+	@gcc libftprintf.a mainprintf.c
+	@./a.out t
 
 .PHONY: all clean fclean re

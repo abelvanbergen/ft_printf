@@ -6,18 +6,18 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 10:42:50 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/16 13:36:30 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 08:40:01 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static void	ft_putnbr_unsigned_int(unsigned int nb,
+static void	ft_putnbr_unsigned_int(unsigned long long nb,
 										int len, int apostrophe, int fd)
 {
 	int		i;
 	int		count;
-	char	buf[13];
+	char	buf[26];
 
 	i = len - 1;
 	if (nb == 0)
@@ -33,11 +33,12 @@ static void	ft_putnbr_unsigned_int(unsigned int nb,
 			nb /= 10;
 		}
 		i--;
+		count++;
 	}
 	ft_putlstr_fd(buf, len, fd);
 }
 
-int		get_print_char_un(t_flags flags, int nb, int len)
+int		get_print_char_un(t_flags flags, unsigned long long nb, int len)
 {
 	int res;
 
@@ -54,18 +55,18 @@ int		get_print_char_un(t_flags flags, int nb, int len)
 
 void	print_un_width_front(t_flags flags, int print_char)
 {
-	if (flags.zero == 1 && flags.prenumber == 0)
+	if (flags.zero == 1 && flags.prenumber == 0 && flags.precision == 0)
 		ft_putlzero(flags.width - print_char);
 	else
 		ft_putlspace(flags.width - print_char);
 }
 
-int			print_unsigned_int(t_flags flags, unsigned int nb)
+int			print_unsigned_int(t_flags flags, unsigned long long nb)
 {
 	int len;
 	int print_char;
 
-	len = nbr_spacecounter_figure_base(nb, 10);
+	len = nbr_spacecounter_figure_base_u(nb, 10);
 	print_char = get_print_char_un(flags, nb, len);
 	if (flags.width > print_char && flags.dash == 0)
 		print_un_width_front(flags, print_char);

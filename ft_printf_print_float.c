@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/17 12:29:55 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/19 16:23:23 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 15:51:08 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,42 @@ void	get_floatinfo(t_flags flags, t_float *floatinfo, double nb)
 	i = 0;
 	res = 10;
 	floatinfo->nb_before = nb;
-	floatinfo->neg = floatinfo->nb_before < 0 ? 1 : 0;
+	floatinfo->neg = 0;
+	if (nb < 0 || *(unsigned long long *)&nb == 0x8000000000000000)
+		floatinfo->neg = 1;
 	floatinfo->nb_before_length =
 				nbr_spacecounter_figure_base(floatinfo->nb_before, 10);
 	nb -= floatinfo->nb_before;
+	if (floatinfo->neg == 1)
+		nb *= -1;
 	res = tentothepower(flags.prenumber);
 	floatinfo->nb_after = nb * res;
-	if (floatinfo->nb_after % 10 >= 5)
-		floatinfo->nb_after += 10 - (floatinfo->nb_after % 10);
+	if (nb == 0.5 && flags.prenumber == 0)
+		floatinfo->nb_before += floatinfo->nb_before % 2;
+	else
+	{
+		if (floatinfo->nb_after % 10 >= 5)
+			floatinfo->nb_after += 10 - (floatinfo->nb_after % 10);
+	}
 	floatinfo->nb_after /= 10;
 	if (nbr_spacecounter_figure_base(floatinfo->nb_after, 10) >
 				flags.prenumber && floatinfo->nb_after != 0)
 	{
 		floatinfo->nb_after = 0;
-		floatinfo->nb_before++;
+		if (floatinfo->neg == 1)
+		{
+			floatinfo->nb_before--;
+			if ((nbr_spacecounter_figure_base(floatinfo->nb_before, 10) >
+						floatinfo->nb_before_length))
+				floatinfo->nb_before_length++;
+		}
+		else
+		{
+			floatinfo->nb_before++;
+			if ((nbr_spacecounter_figure_base(floatinfo->nb_before, 10) >
+						floatinfo->nb_before_length))
+				floatinfo->nb_before_length++;
+		}
 	}
 	get_float_length(flags, floatinfo);
 }
@@ -90,15 +112,66 @@ void	print_float_width_front(t_flags flags, t_float floatinfo)
 	}
 }
 
-int	print_float(t_flags flags, double nb)
+int	print_float_edge(char *str, int len, t_flags flags, int neg)
 {
+	if (flags.plus == 1 || flags.space == 1 || neg == 1)
+		flags.width--;
+	if (flags.width > len && flags.dash == 0)
+		ft_putlspace(flags.width - len);
+	ft_print_sign(flags, neg);
+	ft_putlstr_fd(str, len, 1);
+	if (flags.width > len && flags.dash == 1)
+		ft_putlspace(flags.width - len);
+	if (flags.width > len)
+		return (flags.width);
+	return (len);
+}
+
+int	float_check_edge(double nb, int cap, t_flags flags)
+{
+	if (nb > __DBL_MAX__)
+	{
+		if (cap == 1)
+			return (print_float_edge("INF", 3, flags, 0));
+		else
+			return (print_float_edge("inf", 3, flags, 0));
+	}
+	if (nb < __DBL_MAX__ * -1)
+	{
+		if (cap == 1)
+			return (print_float_edge("INF", 3, flags, 1));
+		else
+			return (print_float_edge("inf", 3, flags, 1));
+	}
+	if (nb != nb)
+	{
+		flags.plus = 0;
+		flags.space = 0;
+		if (cap == 1)
+			return (print_float_edge("NAN", 3, flags, 0));
+		else
+			return (print_float_edge("nan", 3, flags, 0));
+	}
+	return (0);
+}
+
+int	print_float(t_flags flags, double nb, int cap)
+{
+	int		check;
 	t_float floatinfo;
 
+	if (flags.prenumber > 30)
+		return (-1);
+	check = float_check_edge(nb, cap, flags);
+	if (check > 0)
+		return (check);
 	setprecisionfloat(&flags);
 	setfloatinfozero(&floatinfo);
 	get_floatinfo(flags, &floatinfo, nb);
 	if (flags.width > floatinfo.length && flags.dash == 0)
 		print_float_width_front(flags, floatinfo);
+	if (flags.zero == 0 || flags.width <= floatinfo.length)
+		ft_print_sign(flags, floatinfo.neg);
 	put_float_before(flags, floatinfo.nb_before, floatinfo.nb_before_length);
 	if (!(flags.precision == 1 && flags.prenumber == 0 && flags.hash == 0))
 		write(1, ".", 1);

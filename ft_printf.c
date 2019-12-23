@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 14:01:09 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/20 16:36:54 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/23 10:58:32 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static int	put_bonus(char **str, va_list ap, t_flags flags, int count)
 	// if (**str == 'g')
 	// 	return (print_char(flags, va_arg(ap, int)));
 	if (**str == 'f')
-		return (print_float(flags, va_arg(ap, double)));
+		return (print_float(flags, va_arg(ap, double), 0));
+	if (**str == 'F')
+		return (print_float(flags, va_arg(ap, double), 1));
 	if (**str == 'e')
 		return (print_e(flags, va_arg(ap, double), 'e'));
 	if (**str == 'E')
@@ -48,6 +50,8 @@ static int	put(char **str, va_list ap, int count)
 		return (print_pointer(flags, va_arg(ap, void *)));
 	if (**str == '%')
 		return (print_char(flags, '%'));
+	if (**str == 'o')
+		return (get_print_octal(flags, ap));
 	return (put_bonus(str, ap, flags, count));
 }
 
