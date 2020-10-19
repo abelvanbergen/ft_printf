@@ -6,13 +6,13 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 19:41:40 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/19 19:23:34 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/04 12:28:01 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-char	*ft_strchr(const char *s, int c)
+char		*ft_strchr(const char *s, int c)
 {
 	int i;
 
@@ -42,7 +42,7 @@ void		ft_print_sign(t_flags flags, int neg)
 	return ;
 }
 
-void	setprecisionfloat(t_flags *flags)
+void		setprecisionfloat(t_flags *flags)
 {
 	if (flags->precision == 0)
 	{
@@ -51,7 +51,7 @@ void	setprecisionfloat(t_flags *flags)
 	}
 }
 
-void	setfloatinfozero(t_float *floatinfo)
+void		setfloatinfozero(t_float *floatinfo)
 {
 	floatinfo->nb_before = 0;
 	floatinfo->nb_before_length = 0;
@@ -63,11 +63,11 @@ void	setfloatinfozero(t_float *floatinfo)
 	floatinfo->nb_zero_sign = 0;
 }
 
-long long		tentothepower(int power)
+long long	tentothepower(int power)
 {
 	long long res;
 
-	res = 10;
+	res = 1;
 	while (power > 0)
 	{
 		res *= 10;

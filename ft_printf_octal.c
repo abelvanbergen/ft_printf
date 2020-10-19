@@ -6,36 +6,38 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 17:05:14 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 08:33:54 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 13:50:04 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-void	ft_putnbr_octal_fd(long long nb, int len, int fd)
+static void	ft_putnbr_octal_fd(long long nb, int len, int apostrophe, int fd)
 {
 	int		i;
-	char	buf[22];
+	int		count;
+	char	buf[29];
 
-	if (nb == 0)
-	{
-		write(fd, "0", 1);
-		return ;
-	}
 	i = len - 1;
+	if (nb == 0)
+		buf[i] = '0';
+	count = 1;
 	while (nb != 0)
 	{
-		if (nb % 8 < 10)
-			buf[i] = '0' + nb % 8;
+		if (count % 4 == 0 && apostrophe == 1)
+			buf[i] = ',';
 		else
-			buf[i] = 87 + (nb % 8);
-		nb /= 8;
+		{
+			buf[i] = '0' + nb % 8;
+			nb /= 8;
+		}
 		i--;
+		count++;
 	}
 	ft_putlstr_fd(buf, len, fd);
 }
 
-int	get_print_char_octal(t_flags *flags, long long nb, int len)
+static int	get_print_char_octal(t_flags *flags, long long nb, int len)
 {
 	int res;
 
@@ -51,6 +53,8 @@ int	get_print_char_octal(t_flags *flags, long long nb, int len)
 		res = flags->prenumber;
 	else
 		res = len;
+	if (flags->apostrophe == 1)
+		res += (len - 1) / 3;
 	return (res);
 }
 
@@ -68,7 +72,24 @@ static void	print_octal_width(t_flags flags, int print_char, int len,
 	}
 }
 
-int	print_octal(t_flags flags, unsigned long long nb)
+static void	print_precision_and_octal(t_flags flags, unsigned long long nb,
+					int len, int print_char)
+{
+	if (flags.prenumber > len)
+		ft_putlzero(flags.prenumber - len);
+	else
+	{
+		if (flags.hash == 1 && (flags.zero == 0 ||
+				flags.width <= print_char) && nb != 0)
+			write(1, "0", 1);
+	}
+	if (flags.apostrophe == 1)
+		ft_putnbr_octal_fd(nb, len + (len - 1) / 3, flags.apostrophe, 1);
+	else
+		ft_putnbr_octal_fd(nb, len, flags.apostrophe, 1);
+}
+
+int			print_octal(t_flags flags, unsigned long long nb)
 {
 	int len;
 	int	print_char;
@@ -78,17 +99,7 @@ int	print_octal(t_flags flags, unsigned long long nb)
 	if (flags.width > print_char && flags.dash == 0)
 		print_octal_width(flags, print_char, len, nb);
 	if (print_char != 0)
-	{
-		if (flags.prenumber > len)
-			ft_putlzero(flags.prenumber - len);
-		else
-		{
-			if (flags.hash == 1 && (flags.zero == 0 ||
-					flags.width <= print_char) && nb != 0)
-				write(1, "0", 1);
-		}
-		ft_putnbr_octal_fd(nb, len, 1);
-	}
+		print_precision_and_octal(flags, nb, len, print_char);
 	if (flags.width > print_char && flags.dash == 1)
 		print_octal_width(flags, print_char, len, nb);
 	if (flags.width > print_char)

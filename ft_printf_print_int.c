@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 11:08:18 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 08:49:32 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 16:06:36 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_putnbr_without_sign(long long nb, int len,
 	count = 1;
 	while (nb != 0)
 	{
-		if ((count) % 4 == 0 && apostrophe == 1)
+		if (count % 4 == 0 && apostrophe == 1)
 			buf[i] = ',';
 		else
 		{
@@ -73,7 +73,7 @@ static void	print_int_width_front(t_flags flags, int print_char, int neg)
 		ft_putlspace(flags.width - print_char);
 }
 
-void	ft_print_precision_and_number(t_flags flags, int len,
+void		ft_print_precision_and_number(t_flags flags, int len,
 											int print_char, long long nb)
 {
 	int neg;

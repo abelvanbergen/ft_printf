@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 10:42:50 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 08:40:01 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 16:08:04 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_putnbr_unsigned_int(unsigned long long nb,
 	ft_putlstr_fd(buf, len, fd);
 }
 
-int		get_print_char_un(t_flags flags, unsigned long long nb, int len)
+static int	get_print_char_un(t_flags flags, unsigned long long nb, int len)
 {
 	int res;
 
@@ -53,7 +53,7 @@ int		get_print_char_un(t_flags flags, unsigned long long nb, int len)
 	return (res);
 }
 
-void	print_un_width_front(t_flags flags, int print_char)
+static void	print_un_width_front(t_flags flags, int print_char)
 {
 	if (flags.zero == 1 && flags.prenumber == 0 && flags.precision == 0)
 		ft_putlzero(flags.width - print_char);

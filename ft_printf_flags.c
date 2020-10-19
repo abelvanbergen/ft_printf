@@ -6,26 +6,11 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 14:45:35 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/22 18:40:41 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 12:09:22 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-
-static void	setflagszero(t_flags *flags)
-{
-	flags->dash = 0;
-	flags->zero = 0;
-	flags->star = 0;
-	flags->precision = 0;
-	flags->prenumber = 0;
-	flags->width = 0;
-	flags->plus = 0;
-	flags->space = 0;
-	flags->hash = 0;
-	flags->apostrophe = 0;
-	flags->length = 0;
-}
 
 static void	get_flags(t_flags *flags, char **str)
 {

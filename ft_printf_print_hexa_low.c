@@ -6,34 +6,11 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 10:38:41 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 08:32:31 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 16:34:37 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-
-void		ft_putnbr_hexa_low_fd(unsigned long long nb, int len, int fd)
-{
-	int		i;
-	char	buf[16];
-
-	if (nb == 0)
-	{
-		write(fd, "0", 1);
-		return ;
-	}
-	i = len - 1;
-	while (nb != 0)
-	{
-		if (nb % 16 < 10)
-			buf[i] = '0' + nb % 16;
-		else
-			buf[i] = 87 + (nb % 16);
-		nb /= 16;
-		i--;
-	}
-	ft_putlstr_fd(buf, len, fd);
-}
 
 static void	print_hexa_low_width_front(t_flags flags, int print_char,
 									unsigned long long nb)

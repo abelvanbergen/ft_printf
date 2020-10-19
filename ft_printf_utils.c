@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 10:20:28 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 08:33:21 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/03 16:01:23 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,4 @@ int		nbr_spacecounter_figure_base(long long nb, int base)
 		count++;
 	}
 	return (count);
-}
-
-int	get_print_char_hexa(t_flags flags, int nb, int len)
-{
-	int res;
-
-	if (flags.precision == 1 && flags.prenumber == 0 && nb == 0)
-		return (0);
-	if (flags.prenumber > len)
-		res = flags.prenumber;
-	else
-		res = len;
-	if (flags.hash == 1 && nb != 0)
-		res += 2;
-	return (res);
 }

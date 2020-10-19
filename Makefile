@@ -6,30 +6,34 @@
 #    By: avan-ber <avan-ber@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/13 13:52:31 by avan-ber       #+#    #+#                 #
-#    Updated: 2019/12/22 18:31:53 by avan-ber      ########   odam.nl          #
+#    Updated: 2020/01/06 14:43:39 by avan-ber      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
 FLAGS = -Wall -Wextra -Werror
-OBJECTS =	ft_printf_fill_n.o \
+OBJECTS =	ft_printf_e_floatinfo.o \
+			ft_printf_f_floatinfo.o \
+			ft_printf_fill_n.o \
 			ft_printf_flags.o \
 			ft_printf_get_print_nbr.o \
 			ft_printf_get_print_rest.o \
 			ft_printf_octal.o \
 			ft_printf_print_char.o \
 			ft_printf_print_e.o \
-			ft_printf_print_float.o \
+			ft_printf_print_f.o \
+			ft_printf_print_g.o \
 			ft_printf_print_hexa_low.o \
 			ft_printf_print_hexa_up.o \
 			ft_printf_print_int.o \
 			ft_printf_print_pointer.o \
 			ft_printf_print_str.o \
 			ft_printf_print_unsigned_int.o \
-			ft_printf_putlfiller.o \
+			ft_printf_utils_float.o \
 			ft_printf_utils.o \
 			ft_printf_utils2.o \
 			ft_printf_utils3.o \
+			ft_printf_utils4.o \
 			ft_printf.o
 LBLUE =  \033[38;5;14m
 BLUE =  \033[38;5;12m
@@ -67,8 +71,6 @@ fclean: clean
 
 re: fclean all
 
-test: re
-	@gcc libftprintf.a mainprintf.c
-	@./a.out t
+bonus: $(NAME)
 
 .PHONY: all clean fclean re

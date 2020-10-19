@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/07 14:01:09 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 10:58:32 by avan-ber      ########   odam.nl         */
+/*   Updated: 2020/01/04 12:54:16 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ static int	put_bonus(char **str, va_list ap, t_flags flags, int count)
 {
 	if (**str == 'n')
 		return (get_size_n(flags, ap, count));
-	// if (**str == 'g')
-	// 	return (print_char(flags, va_arg(ap, int)));
+	if (**str == 'g')
+		return (print_g(flags, va_arg(ap, double), 0));
+	if (**str == 'G')
+		return (print_g(flags, va_arg(ap, double), 1));
 	if (**str == 'f')
-		return (print_float(flags, va_arg(ap, double), 0));
+		return (print_float(flags, va_arg(ap, double), 0, 0));
 	if (**str == 'F')
-		return (print_float(flags, va_arg(ap, double), 1));
+		return (print_float(flags, va_arg(ap, double), 1, 0));
 	if (**str == 'e')
-		return (print_e(flags, va_arg(ap, double), 'e'));
+		return (print_e(flags, va_arg(ap, double), 0, 0));
 	if (**str == 'E')
-		return (print_e(flags, va_arg(ap, double), 'E'));
+		return (print_e(flags, va_arg(ap, double), 1, 0));
 	return (-1);
 }
 
@@ -37,9 +39,9 @@ static int	put(char **str, va_list ap, int count)
 	if (**str == 'i' || **str == 'd')
 		return (get_print_int(flags, ap));
 	if (**str == 'c')
-		return (print_char(flags, va_arg(ap, int)));
+		return (get_size_char(flags, ap));
 	if (**str == 's')
-		return (print_str(flags, va_arg(ap, char *)));
+		return (get_size_str(flags, ap));
 	if (**str == 'u')
 		return (get_print_unsigned(flags, ap));
 	if (**str == 'x')

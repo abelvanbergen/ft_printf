@@ -6,7 +6,7 @@
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/20 17:07:52 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 09:00:48 by avan-ber      ########   odam.nl         */
+/*   Updated: 2019/12/28 15:38:50 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,18 @@ int		get_size_n(t_flags flags, va_list ap, int count)
 	else
 		fill_n_int(ap, count);
 	return (0);
+}
+
+int		get_size_str(t_flags flags, va_list ap)
+{
+	if (flags.length == 3)
+		return (print_str_w(flags, va_arg(ap, wchar_t *)));
+	return (print_str(flags, va_arg(ap, char *)));
+}
+
+int		get_size_char(t_flags flags, va_list ap)
+{
+	if (flags.length == 3)
+		return (print_char_w(flags, va_arg(ap, wint_t)));
+	return (print_char(flags, va_arg(ap, int)));
 }

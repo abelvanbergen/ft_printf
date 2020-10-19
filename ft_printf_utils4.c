@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf_putlfiller.c                             :+:    :+:            */
+/*   ft_printf_utils4.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: avan-ber <avan-ber@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/13 10:23:39 by avan-ber       #+#    #+#                */
-/*   Updated: 2019/12/23 11:40:44 by avan-ber      ########   odam.nl         */
+/*   Created: 2020/01/03 12:09:46 by avan-ber       #+#    #+#                */
+/*   Updated: 2020/01/06 14:13:06 by avan-ber      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+
+void	setflagszero(t_flags *flags)
+{
+	flags->dash = 0;
+	flags->zero = 0;
+	flags->star = 0;
+	flags->precision = 0;
+	flags->prenumber = 0;
+	flags->width = 0;
+	flags->plus = 0;
+	flags->space = 0;
+	flags->hash = 0;
+	flags->apostrophe = 0;
+	flags->length = 0;
+}
 
 void	ft_putlspace(int len)
 {
